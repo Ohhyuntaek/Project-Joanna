@@ -10,7 +10,15 @@ public class Joan : MonoBehaviour
     public Animator animator;
 
     [SerializeField]
-    public float walkSpeed = 0;
+    public float walkingFloat = 2.5f;
+    [SerializeField]
+    public float runningFloat = 4.0f;
+    [SerializeField]
+    public bool isWalking = false;
+    [SerializeField]
+    public bool isRunning = false;
+
+    public float moveSpeed = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,6 +29,17 @@ public class Joan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            isRunning = true;
+            moveSpeed = runningFloat;
+        }
+        else
+        {
+            isRunning = false;
+            moveSpeed = walkingFloat;
+        }
+
         states[(int)joanState].Execute();
         states[(int)joanState].OnTransition();
     }
@@ -41,6 +60,10 @@ public class Joan : MonoBehaviour
         states[(int)JoanState.ToWalk] = new JoanToWalk(this);
         states[(int)JoanState.Walking] = new JoanWalking(this);
         states[(int)JoanState.BreakWalk] = new JoanBreakWalk(this);
+        states[(int)JoanState.ToRun] = new JoanToRun(this);
+        states[(int)JoanState.Running] = new JoanRunning(this);
+        states[(int)JoanState.BreakRun] = new JoanBreakRun(this);
+        states[(int)JoanState.TrickTurn] = new JoanTrickTurn(this);
 
         states[(int)joanState].Enter();
     }

@@ -493,7 +493,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  walkSpeed: 2.5
+  walkingFloat: 2.5
+  runningFloat: 4
+  isWalking: 0
+  isRunning: 0
+  moveSpeed: 1
 --- !u!1 &1928150242
 GameObject:
   m_ObjectHideFlags: 0

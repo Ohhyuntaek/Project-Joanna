@@ -26,7 +26,14 @@ public class JoanIdle : State<Joan>
     {
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
-            user.ChangeState(JoanState.ToWalk);
+            if (user.isRunning)
+            {
+                user.ChangeState(JoanState.ToRun);
+            }
+            else
+            {
+                user.ChangeState(JoanState.ToWalk);
+            }
         }
     }
 }
