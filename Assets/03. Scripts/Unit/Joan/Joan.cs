@@ -3,9 +3,14 @@ using JoanStates;
 
 public class Joan : MonoBehaviour
 {
-    public JoanState joanState = JoanState.Idle;
+    private JoanState prevJoanState = JoanState.Idle;
+    private JoanState joanState = JoanState.Idle;
+
     public State<Joan>[] states;
     public Animator animator;
+
+    [SerializeField]
+    public float walkSpeed = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,7 +37,10 @@ public class Joan : MonoBehaviour
 
         states = new State<Joan>[(int)JoanState.Last];
 
-        states[(int)JoanState.Idle] = new Idle(this);
+        states[(int)JoanState.Idle] = new JoanIdle(this);
+        states[(int)JoanState.ToWalk] = new JoanToWalk(this);
+        states[(int)JoanState.Walking] = new JoanWalking(this);
+        states[(int)JoanState.BreakWalk] = new JoanBreakWalk(this);
 
         states[(int)joanState].Enter();
     }
@@ -45,5 +53,13 @@ public class Joan : MonoBehaviour
     public void ChangeAnimation(string animationName, float normalizedTime = 0)
     {
         animator.Play(animationName, 0, normalizedTime);
+    }
+
+    public void ChangeState(JoanState state)
+    {
+        states[(int)joanState].Exit();
+        prevJoanState = joanState;
+        joanState = state;
+        states[(int)joanState].Enter();
     }
 }

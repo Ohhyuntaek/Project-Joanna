@@ -1,9 +1,9 @@
 using UnityEngine;
 using JoanStates;
 
-public class Idle : State<Joan>
+public class JoanIdle : State<Joan>
 {
-    public Idle(Joan user) : base(user) { }
+    public JoanIdle(Joan user) : base(user) { }
 
     public override void Enter()
     {
@@ -14,7 +14,7 @@ public class Idle : State<Joan>
 
     public override void Execute()
     {
-        
+        user.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0, 0);
     }
 
     public override void Exit()
@@ -24,7 +24,10 @@ public class Idle : State<Joan>
 
     public override void OnTransition()
     {
-        
+        if (Input.GetAxisRaw("Horizontal") != 0)
+        {
+            user.ChangeState(JoanState.ToWalk);
+        }
     }
 }
 
