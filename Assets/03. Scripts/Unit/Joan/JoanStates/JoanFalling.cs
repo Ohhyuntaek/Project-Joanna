@@ -24,9 +24,13 @@ public class JoanFalling : State<Joan>
 
     public override void OnTransition()
     {
-        if (user.isGround)
+        if (user.isGround && !user.isRunning)
         {
             user.ChangeState(JoanState.Land);
+        }
+        else if (user.isGround && user.isRunning)
+        {
+            user.ChangeState(JoanState.LandHard);
         }
     }
 }
