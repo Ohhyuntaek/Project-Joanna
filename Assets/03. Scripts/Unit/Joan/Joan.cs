@@ -136,6 +136,7 @@ public class Joan : MonoBehaviour
             else
             {
                 isGround = false;
+                ChangeState(JoanState.Falling);
             }
         }
     }
