@@ -74,6 +74,8 @@ public class Joan : MonoBehaviour
         states[(int)JoanState.Running] = new JoanRunning(this);
         states[(int)JoanState.BreakRun] = new JoanBreakRun(this);
         states[(int)JoanState.TrickTurn] = new JoanTrickTurn(this);
+        states[(int)JoanState.Falling] = new JoanFalling(this);
+        states[(int)JoanState.Land] = new JoanLand(this);
 
         states[(int)joanState].Enter();
     }

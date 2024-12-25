@@ -24,16 +24,24 @@ public class JoanIdle : State<Joan>
 
     public override void OnTransition()
     {
-        if (Input.GetAxisRaw("Horizontal") != 0)
+        if (!user.isGround)
         {
-            if (user.isRunning)
+            user.ChangeState(JoanState.Falling);
+        }
+        else
+        {
+            if (Input.GetAxisRaw("Horizontal") != 0)
             {
-                user.ChangeState(JoanState.ToRun);
+                if (user.isRunning)
+                {
+                    user.ChangeState(JoanState.ToRun);
+                }
+                else
+                {
+                    user.ChangeState(JoanState.ToWalk);
+                }
             }
-            else
-            {
-                user.ChangeState(JoanState.ToWalk);
-            }
+
         }
     }
 }
