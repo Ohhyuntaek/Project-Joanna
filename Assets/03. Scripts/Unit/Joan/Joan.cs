@@ -6,6 +6,11 @@ public class Joan : MonoBehaviour
     private JoanState prevJoanState = JoanState.Idle;
     private JoanState joanState = JoanState.Idle;
 
+    [SerializeField] private float yVelocity = 0;
+    [SerializeField] float gravity = 9.8f;
+    [SerializeField] private float castSize = 0;
+    [SerializeField] private LayerMask floorLayer;
+
     public State<Joan>[] states;
     public Animator animator;
 
@@ -17,6 +22,8 @@ public class Joan : MonoBehaviour
     public bool isWalking = false;
     [SerializeField]
     public bool isRunning = false;
+    [SerializeField]
+    public bool isGround = false;
 
     public float moveSpeed = 1;
 
@@ -29,6 +36,9 @@ public class Joan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GroundCheck();
+        ApplyGravity();
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             isRunning = true;
@@ -84,5 +94,42 @@ public class Joan : MonoBehaviour
         prevJoanState = joanState;
         joanState = state;
         states[(int)joanState].Enter();
+    }
+
+    private void GroundCheck()
+    {
+        Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
+
+        if (yVelocity <= 0)
+        {
+            Debug.DrawLine(rigidbody.position + Vector2.up, rigidbody.position + Vector2.up + (Vector2.down * castSize), Color.red);
+
+            RaycastHit2D rayHit = Physics2D.Raycast(rigidbody.position + Vector2.up, Vector2.down, castSize, floorLayer);
+            if (rayHit.collider != null)
+            {
+                if (!isGround)
+                {
+                    transform.position = rayHit.point;
+                }
+                isGround = true;
+                yVelocity = 0;
+            }
+            else
+            {
+                isGround = false;
+            }
+        }
+    }
+
+    public void ApplyGravity()
+    {
+        if (!isGround)
+        {
+            yVelocity -= gravity * gravity * Time.deltaTime;
+        }
+        Vector3 position = transform.position;
+     
+        position.y += yVelocity * Time.deltaTime;
+        transform.position = position;
     }
 }
