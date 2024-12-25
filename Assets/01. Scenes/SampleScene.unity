@@ -626,18 +626,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda645c92ab1a9a4ea8832af0815fdf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yVelocity: 1
   gravity: 5
   castSize: 1.88
   floorLayer:
     serializedVersion: 2
     m_Bits: 8
   animator: {fileID: 0}
+  yVelocity: 1
   walkingFloat: 2.5
   runningFloat: 4
   isWalking: 0
   isRunning: 0
   isGround: 0
+  jumpForce: 12
   moveSpeed: 1
 --- !u!1 &1928150242
 GameObject:

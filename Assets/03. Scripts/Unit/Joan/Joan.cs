@@ -6,14 +6,15 @@ public class Joan : MonoBehaviour
     private JoanState prevJoanState = JoanState.Idle;
     private JoanState joanState = JoanState.Idle;
 
-    [SerializeField] private float yVelocity = 0;
-    [SerializeField] float gravity = 9.8f;
+    [SerializeField] private float gravity = 9.8f;
     [SerializeField] private float castSize = 0;
     [SerializeField] private LayerMask floorLayer;
 
     public State<Joan>[] states;
     public Animator animator;
 
+    [SerializeField] 
+    public float yVelocity = 0;
     [SerializeField]
     public float walkingFloat = 2.5f;
     [SerializeField]
@@ -24,6 +25,8 @@ public class Joan : MonoBehaviour
     public bool isRunning = false;
     [SerializeField]
     public bool isGround = false;
+    [SerializeField]
+    public float jumpForce = 0;
 
     public float moveSpeed = 1;
 
@@ -39,6 +42,11 @@ public class Joan : MonoBehaviour
         GroundCheck();
         ApplyGravity();
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ChangeState(JoanState.Jump);
+        }
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             isRunning = true;
@@ -52,6 +60,11 @@ public class Joan : MonoBehaviour
 
         states[(int)joanState].Execute();
         states[(int)joanState].OnTransition();
+
+        if (!isGround)
+        {
+            animator.SetFloat("YSpeed", yVelocity);
+        }
     }
 
     private void OnEnable()
@@ -76,6 +89,7 @@ public class Joan : MonoBehaviour
         states[(int)JoanState.TrickTurn] = new JoanTrickTurn(this);
         states[(int)JoanState.Falling] = new JoanFalling(this);
         states[(int)JoanState.Land] = new JoanLand(this);
+        states[(int)JoanState.Jump] = new JoanJump(this);
 
         states[(int)joanState].Enter();
     }
