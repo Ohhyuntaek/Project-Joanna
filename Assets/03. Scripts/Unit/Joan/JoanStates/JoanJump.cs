@@ -43,7 +43,15 @@ public class JoanJump : State<Joan>
     {
         if (user.isGround)
         {
-            user.ChangeState(JoanState.Land);
+            if (Input.GetAxisRaw("Horizontal") != 0 && user.isRunning)
+            {
+                user.ChangeState(JoanState.LandHard);
+            }
+            else
+            {
+                user.ChangeState(JoanState.Land);
+            }
+
             hasJumped = false;
         }
     }

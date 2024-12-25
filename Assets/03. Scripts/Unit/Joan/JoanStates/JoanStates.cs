@@ -5,7 +5,7 @@ namespace JoanStates
     [System.Serializable]
     public enum JoanState
     {
-        Spawn, Idle, ToWalk, Walking, BreakWalk, ToRun, Running, BreakRun, TrickTurn, Falling, Land, Jump, Last
+        Spawn, Idle, ToWalk, Walking, BreakWalk, ToRun, Running, BreakRun, TrickTurn, Falling, Land, Jump, LandHard, Last
     }
 
     public enum JoanAnimation
@@ -22,6 +22,7 @@ namespace JoanStates
         JoanFalling,
         JoanLand,
         JoanJump,
+        JoanLandHard,
         Last
     }
 }

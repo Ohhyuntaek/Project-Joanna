@@ -27,6 +27,8 @@ public class Joan : MonoBehaviour
     public bool isGround = false;
     [SerializeField]
     public float jumpForce = 0;
+    [SerializeField]
+    public float landingSpeed = 0;
 
     public float moveSpeed = 1;
 
@@ -79,17 +81,18 @@ public class Joan : MonoBehaviour
 
         states = new State<Joan>[(int)JoanState.Last];
 
-        states[(int)JoanState.Idle] = new JoanIdle(this);
-        states[(int)JoanState.ToWalk] = new JoanToWalk(this);
-        states[(int)JoanState.Walking] = new JoanWalking(this);
-        states[(int)JoanState.BreakWalk] = new JoanBreakWalk(this);
-        states[(int)JoanState.ToRun] = new JoanToRun(this);
-        states[(int)JoanState.Running] = new JoanRunning(this);
-        states[(int)JoanState.BreakRun] = new JoanBreakRun(this);
-        states[(int)JoanState.TrickTurn] = new JoanTrickTurn(this);
-        states[(int)JoanState.Falling] = new JoanFalling(this);
-        states[(int)JoanState.Land] = new JoanLand(this);
-        states[(int)JoanState.Jump] = new JoanJump(this);
+        states[(int)JoanState.Idle]         = new JoanIdle(this);
+        states[(int)JoanState.ToWalk]       = new JoanToWalk(this);
+        states[(int)JoanState.Walking]      = new JoanWalking(this);
+        states[(int)JoanState.BreakWalk]    = new JoanBreakWalk(this);
+        states[(int)JoanState.ToRun]        = new JoanToRun(this);
+        states[(int)JoanState.Running]      = new JoanRunning(this);
+        states[(int)JoanState.BreakRun]     = new JoanBreakRun(this);
+        states[(int)JoanState.TrickTurn]    = new JoanTrickTurn(this);
+        states[(int)JoanState.Falling]      = new JoanFalling(this);
+        states[(int)JoanState.Land]         = new JoanLand(this);
+        states[(int)JoanState.Jump]         = new JoanJump(this);
+        states[(int)JoanState.LandHard]     = new JoanLandHard(this);
 
         states[(int)joanState].Enter();
     }
