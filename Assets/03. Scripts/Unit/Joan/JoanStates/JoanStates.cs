@@ -15,6 +15,7 @@ namespace JoanStates
         LandHard, 
         Jump, 
         ToCrounch, OutCrounch,
+        LightAtk, UpLightAtk,
         Last
     }
 

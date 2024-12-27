@@ -14,28 +14,23 @@ public class Joan : MonoBehaviour
     public State<Joan>[] states;
     public Animator animator;
 
-    [SerializeField] 
-    public float yVelocity = 0;
-    [SerializeField]
-    public float walkingFloat = 2.5f;
-    [SerializeField]
-    public float runningFloat = 4.0f;
-    [SerializeField]
-    public bool isWalking = false;
-    [SerializeField]
-    public bool isRunning = false;
-    [SerializeField]
-    public bool isGround = false;
-    [SerializeField]
-    public float jumpForce = 0;
-    [SerializeField]
-    public float landingSpeed = 0;
+    [SerializeField] public float yVelocity = 0;
+    [SerializeField] public float walkingValue = 2.5f;
+    [SerializeField] public float runningValue = 4.0f;
+    [SerializeField] public float jumpForce = 0;
+    [SerializeField] public float landingSpeed = 0;
+    [SerializeField] public bool isWalking = false;
+    [SerializeField] public bool isRunning = false;
+    [SerializeField] public bool isAttacking = false;
+    [SerializeField] public bool isGround = false;
 
     public float moveSpeed = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        isAttacking = false;
+
         animator = GetComponentInChildren<Animator>();
 
         switchCrounchCollider(false);
@@ -55,18 +50,23 @@ public class Joan : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             isRunning = true;
-            moveSpeed = runningFloat;
+            moveSpeed = runningValue;
         }
         else
         {
             isRunning = false;
-            moveSpeed = walkingFloat;
+            moveSpeed = walkingValue;
         }
 
         if (Input.GetKeyDown(KeyCode.S) && isGround)
         {
             ChangeState(JoanState.ToCrounch);
-            switchCrounchCollider(true);
+        }
+
+        if (Input.GetMouseButtonDown(0) && isAttacking == false && isGround)
+        {
+            isAttacking = true;
+            ChangeState(JoanState.LightAtk);
         }
 
         states[(int)joanState].Execute();
@@ -104,6 +104,8 @@ public class Joan : MonoBehaviour
         states[(int)JoanState.LandHard]     = new JoanLandHard(this);
         states[(int)JoanState.ToCrounch]    = new JoanToCrounch(this);
         states[(int)JoanState.OutCrounch]   = new JoanOutCrounch(this);
+        states[(int)JoanState.LightAtk]     = new JoanLightAtk(this);
+        states[(int)JoanState.UpLightAtk]   = new JoanUpLightAtk(this);
 
         states[(int)joanState].Enter();
     }
@@ -169,7 +171,7 @@ public class Joan : MonoBehaviour
         Collider2D col = GetComponent<Collider2D>();
         if (trigger)
         {
-            col.enabled = false;
+            col.enabled = false;    
             crounchCollider.SetActive(true);
         }
         else
