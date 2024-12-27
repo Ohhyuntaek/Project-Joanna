@@ -13,24 +13,22 @@ public class JoanLandHard : State<Joan>
         Debug.Log("Joan: Joan Land State");
         user.ChangeAnimation("JoanLandHard");
         isAnimationComplete = false;
+
+        if (Input.GetAxisRaw("Horizontal") != 0)
+        {
+            Vector3 scale = user.transform.localScale;
+            scale.x = Input.GetAxisRaw("Horizontal");
+            user.transform.localScale = scale;
+
+            user.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(user.landingSpeed * Input.GetAxisRaw("Horizontal"), user.GetComponent<Rigidbody2D>().linearVelocity.y);
+        }
     }
 
     public override void Execute()
     {
         AnimatorStateInfo stateInfo = user.animator.GetCurrentAnimatorStateInfo(0);
 
-        if (stateInfo.IsName("JoanLandHard") && stateInfo.normalizedTime <= 0.7f)
-        {
-            if (Input.GetAxisRaw("Horizontal") != 0)
-            {
-                Vector3 scale = user.transform.localScale;
-                scale.x = Input.GetAxisRaw("Horizontal");
-                user.transform.localScale = scale;
-
-                user.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(user.landingSpeed * Input.GetAxisRaw("Horizontal"), user.GetComponent<Rigidbody2D>().linearVelocity.y);
-            }
-        }
-        else if (stateInfo.IsName("JoanLandHard") && stateInfo.normalizedTime > 0.7f && stateInfo.normalizedTime < 1)
+        if (stateInfo.IsName("JoanLandHard") && stateInfo.normalizedTime > 0.7f && stateInfo.normalizedTime < 1)
         {
             user.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0, 0);
         }

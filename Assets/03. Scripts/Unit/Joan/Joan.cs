@@ -9,6 +9,7 @@ public class Joan : MonoBehaviour
     [SerializeField] private float gravity = 9.8f;
     [SerializeField] private float castSize = 0;
     [SerializeField] private LayerMask floorLayer;
+    [SerializeField] private GameObject crounchCollider;
 
     public State<Joan>[] states;
     public Animator animator;
@@ -36,6 +37,8 @@ public class Joan : MonoBehaviour
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
+
+        switchCrounchCollider(false);
     }
 
     // Update is called once per frame
@@ -58,6 +61,12 @@ public class Joan : MonoBehaviour
         {
             isRunning = false;
             moveSpeed = walkingFloat;
+        }
+
+        if (Input.GetKeyDown(KeyCode.S) && isGround)
+        {
+            ChangeState(JoanState.ToCrounch);
+            switchCrounchCollider(true);
         }
 
         states[(int)joanState].Execute();
@@ -93,6 +102,8 @@ public class Joan : MonoBehaviour
         states[(int)JoanState.Land]         = new JoanLand(this);
         states[(int)JoanState.Jump]         = new JoanJump(this);
         states[(int)JoanState.LandHard]     = new JoanLandHard(this);
+        states[(int)JoanState.ToCrounch]    = new JoanToCrounch(this);
+        states[(int)JoanState.OutCrounch]   = new JoanOutCrounch(this);
 
         states[(int)joanState].Enter();
     }
@@ -151,5 +162,20 @@ public class Joan : MonoBehaviour
      
         position.y += yVelocity * Time.deltaTime;
         transform.position = position;
+    }
+
+    public void switchCrounchCollider(bool trigger)
+    {
+        Collider2D col = GetComponent<Collider2D>();
+        if (trigger)
+        {
+            col.enabled = false;
+            crounchCollider.SetActive(true);
+        }
+        else
+        {
+            col.enabled = true;
+            crounchCollider.SetActive(false);
+        }
     }
 }
