@@ -63,6 +63,7 @@ public class JoanRunning : State<Joan>
     {
         base.Enter();
         Debug.Log("Joan: Joan Running State");
+        user.moveSpeed = user.runningValue;
 
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
@@ -99,6 +100,7 @@ public class JoanRunning : State<Joan>
         }
         else if (!user.isRunning)
         {
+            user.isRunning = false;
             user.ChangeState(JoanState.Walking);
         }
     }
@@ -144,6 +146,7 @@ public class JoanBreakRun : State<Joan>
     {
         if (isAnimationComplete)
         {
+            user.isRunning = false;
             user.ChangeState(JoanState.Idle);
         }
     }

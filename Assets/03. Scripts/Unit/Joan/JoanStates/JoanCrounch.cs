@@ -74,6 +74,7 @@ public class JoanOutCrounch : State<Joan>
     {
         if (isAnimationComplete)
         {
+            user.isCrounching = false;
             user.ChangeState(JoanState.Idle);
         }
     }

@@ -19,10 +19,11 @@ public class Joan : MonoBehaviour
     [SerializeField] public float runningValue = 4.0f;
     [SerializeField] public float jumpForce = 0;
     [SerializeField] public float landingSpeed = 0;
-    [SerializeField] public bool isWalking = false;
-    [SerializeField] public bool isRunning = false;
-    [SerializeField] public bool isAttacking = false;
-    [SerializeField] public bool isGround = false;
+    [SerializeField] public bool isWalking      = false;
+    [SerializeField] public bool isRunning      = false;
+    [SerializeField] public bool isAttacking    = false;
+    [SerializeField] public bool isCrounching   = false;
+    [SerializeField] public bool isGround       = false;
 
     public float moveSpeed = 1;
 
@@ -46,27 +47,32 @@ public class Joan : MonoBehaviour
         {
             ChangeState(JoanState.Jump);
         }
-
-        if (Input.GetKey(KeyCode.LeftShift))
+        
+        if (Input.GetKey(KeyCode.LeftShift) && isRunning == false && isGround)
         {
             isRunning = true;
-            moveSpeed = runningValue;
-        }
-        else
+        } 
+        else if (!Input.GetKey(KeyCode.LeftShift))
         {
             isRunning = false;
             moveSpeed = walkingValue;
         }
-
-        if (Input.GetKeyDown(KeyCode.S) && isGround)
+        
+        
+        if (Input.GetKey(KeyCode.S) && isCrounching == false && isGround)
         {
+            isCrounching = true;
             ChangeState(JoanState.ToCrounch);
         }
-
+        
         if (Input.GetMouseButtonDown(0) && isAttacking == false && isGround)
         {
             isAttacking = true;
             ChangeState(JoanState.LightAtk);
+        }
+        else
+        {
+            // isAttacking = false;
         }
 
         states[(int)joanState].Execute();
@@ -91,19 +97,28 @@ public class Joan : MonoBehaviour
         states = new State<Joan>[(int)JoanState.Last];
 
         states[(int)JoanState.Idle]         = new JoanIdle(this);
+
         states[(int)JoanState.ToWalk]       = new JoanToWalk(this);
         states[(int)JoanState.Walking]      = new JoanWalking(this);
         states[(int)JoanState.BreakWalk]    = new JoanBreakWalk(this);
+
         states[(int)JoanState.ToRun]        = new JoanToRun(this);
         states[(int)JoanState.Running]      = new JoanRunning(this);
         states[(int)JoanState.BreakRun]     = new JoanBreakRun(this);
+
         states[(int)JoanState.TrickTurn]    = new JoanTrickTurn(this);
+
         states[(int)JoanState.Falling]      = new JoanFalling(this);
+
         states[(int)JoanState.Land]         = new JoanLand(this);
+
         states[(int)JoanState.Jump]         = new JoanJump(this);
+
         states[(int)JoanState.LandHard]     = new JoanLandHard(this);
+
         states[(int)JoanState.ToCrounch]    = new JoanToCrounch(this);
         states[(int)JoanState.OutCrounch]   = new JoanOutCrounch(this);
+
         states[(int)JoanState.LightAtk]     = new JoanLightAtk(this);
         states[(int)JoanState.UpLightAtk]   = new JoanUpLightAtk(this);
 
