@@ -34,7 +34,7 @@ public class Joan : MonoBehaviour
 
         animator = GetComponentInChildren<Animator>();
 
-        switchCrounchCollider(false);
+        SwitchCrounchCollider(false);
     }
 
     // Update is called once per frame
@@ -59,9 +59,8 @@ public class Joan : MonoBehaviour
         }
         
         
-        if (Input.GetKey(KeyCode.S) && isCrounching == false && isGround)
+        if (Input.GetKey(KeyCode.S) && isCrounching == false && isAttacking == false && isGround)
         {
-            isCrounching = true;
             ChangeState(JoanState.ToCrounch);
         }
         
@@ -69,10 +68,6 @@ public class Joan : MonoBehaviour
         {
             isAttacking = true;
             ChangeState(JoanState.LightAtk);
-        }
-        else
-        {
-            // isAttacking = false;
         }
 
         states[(int)joanState].Execute();
@@ -105,6 +100,7 @@ public class Joan : MonoBehaviour
         states[(int)JoanState.ToRun]        = new JoanToRun(this);
         states[(int)JoanState.Running]      = new JoanRunning(this);
         states[(int)JoanState.BreakRun]     = new JoanBreakRun(this);
+        states[(int)JoanState.RunToWalk]    = new JoanRunToWalk(this);
 
         states[(int)JoanState.TrickTurn]    = new JoanTrickTurn(this);
 
@@ -181,7 +177,7 @@ public class Joan : MonoBehaviour
         transform.position = position;
     }
 
-    public void switchCrounchCollider(bool trigger)
+    public void SwitchCrounchCollider(bool trigger)
     {
         Collider2D col = GetComponent<Collider2D>();
         if (trigger)
@@ -194,5 +190,13 @@ public class Joan : MonoBehaviour
             col.enabled = true;
             crounchCollider.SetActive(false);
         }
+    }
+
+    public void IdleInitalize()
+    {
+        isCrounching = false;
+        isAttacking = false;
+        isRunning = false;
+        isWalking = false;
     }
 }

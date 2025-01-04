@@ -8,7 +8,7 @@ namespace JoanStates
         Spawn, 
         Idle, 
         ToWalk, Walking, BreakWalk, 
-        ToRun, Running, BreakRun, 
+        ToRun, Running, BreakRun, RunToWalk,
         TrickTurn, 
         Falling, 
         Land, 

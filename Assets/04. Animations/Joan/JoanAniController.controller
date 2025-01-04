@@ -304,25 +304,25 @@ AnimatorStateMachine:
     m_Position: {x: 690, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8848116574196906453}
-    m_Position: {x: 900, y: 60, z: 0}
+    m_Position: {x: 270, y: -160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2074640636808875660}
-    m_Position: {x: 900, y: 110, z: 0}
+    m_Position: {x: 270, y: -110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1449829763685646888}
-    m_Position: {x: 1110, y: 60, z: 0}
+    m_Position: {x: 900, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1851089168862364835}
-    m_Position: {x: 1110, y: 110, z: 0}
+    m_Position: {x: 900, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1428105298950549443}
-    m_Position: {x: 1110, y: 10, z: 0}
+    m_Position: {x: 900, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 197161078696881531}
-    m_Position: {x: 1320, y: 110, z: 0}
+    m_Position: {x: 480, y: -110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6156467937481274363}
-    m_Position: {x: 1320, y: 60, z: 0}
+    m_Position: {x: 480, y: -160, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -395,7 +395,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: JoanLightAtk
-  m_Speed: 1
+  m_Speed: 1.25
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -524,7 +524,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: JoanUpLightAtk
-  m_Speed: 1
+  m_Speed: 1.25
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []

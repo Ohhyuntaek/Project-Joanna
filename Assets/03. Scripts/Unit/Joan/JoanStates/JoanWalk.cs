@@ -4,7 +4,6 @@ using UnityEngine;
 public class JoanToWalk : State<Joan>
 {
     private bool isAnimationComplete = false;
-
     public JoanToWalk(Joan user) : base(user) { }
 
     public override void Enter()
@@ -49,6 +48,8 @@ public class JoanToWalk : State<Joan>
             }
             else
             {
+                user.isRunning = false;
+                user.isWalking = true;
                 user.ChangeState(JoanState.Walking);
             }
         }
@@ -76,7 +77,7 @@ public class JoanWalking : State<Joan>
             user.transform.localScale = scale;
         }
 
-        user.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(user.moveSpeed * Input.GetAxisRaw("Horizontal"), user.GetComponent<Rigidbody2D>().linearVelocity.y);
+        user.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(user.moveSpeed * Input.GetAxisRaw("Horizontal"), user.GetComponent<Rigidbody2D>().linearVelocity.y);    
     }
 
     public override void Exit() 
@@ -93,7 +94,7 @@ public class JoanWalking : State<Joan>
         }
         else if (user.isRunning)
         {
-            user.ChangeState(JoanState.Running);
+            user.ChangeState(JoanState.ToRun);
         }
     }
 }

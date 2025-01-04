@@ -10,6 +10,7 @@ public class JoanIdle : State<Joan>
         base.Enter();
         Debug.Log("Joan: Idle State");
         user.ChangeAnimation("JoanIdle");
+        user.IdleInitalize();
     }
 
     public override void Execute()
@@ -38,6 +39,7 @@ public class JoanIdle : State<Joan>
                 }
                 else
                 {
+                    user.isWalking = true;
                     user.ChangeState(JoanState.ToWalk);
                 }
             }

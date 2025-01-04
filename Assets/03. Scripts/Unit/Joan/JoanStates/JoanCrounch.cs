@@ -10,6 +10,7 @@ public class JoanToCrounch : State<Joan>
         base.Enter();
         Debug.Log("Joan: Joan To Crounch State");
         user.ChangeAnimation("JoanToCrounch");
+        user.isCrounching = true;
     }
 
     public override void Execute()
@@ -20,7 +21,7 @@ public class JoanToCrounch : State<Joan>
         if (stateInfo.IsName("JoanToCrounch") && stateInfo.normalizedTime >= 1)
         {
             user.ChangeAnimation("JoanCrounch");
-            user.switchCrounchCollider(true);
+            user.SwitchCrounchCollider(true);
         }
 
     }
@@ -51,6 +52,7 @@ public class JoanOutCrounch : State<Joan>
         Debug.Log("Joan: Joan Out Crounch State");
         user.ChangeAnimation("JoanOutCrounch");
         isAnimationComplete = false;
+        user.isCrounching = false;
     }
 
     public override void Execute()
@@ -61,7 +63,7 @@ public class JoanOutCrounch : State<Joan>
         if (stateInfo.IsName("JoanOutCrounch") && stateInfo.normalizedTime >= 1)
         {
             isAnimationComplete = true;
-            user.switchCrounchCollider(false);
+            user.SwitchCrounchCollider(false);
         }
     }
 
@@ -74,7 +76,6 @@ public class JoanOutCrounch : State<Joan>
     {
         if (isAnimationComplete)
         {
-            user.isCrounching = false;
             user.ChangeState(JoanState.Idle);
         }
     }
